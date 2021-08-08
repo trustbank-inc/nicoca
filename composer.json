@@ -1,0 +1,25 @@
+{
+    "name": "seasalt/nicoca",
+    "description": "A PHP Clean architecture components",
+    "authors": [{
+        "name": "youhei-ushio"
+    }],
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "8.*",
+        "robinvdvleuten/ulid": "^5.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Seasalt\\Nicoca\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Seasalt\\Nicoca\\ComponentServiceProvider"
+            ]
+        }
+    }
+}

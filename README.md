@@ -1,0 +1,3 @@
+```
+composer require seasalt/nicoca
+```
