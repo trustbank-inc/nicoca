@@ -32,9 +32,9 @@ trait DecimalValue
     /**
      * 最小値を取得する
      *
-     * @return int
+     * @return float
      */
-    public static function getMinValue(): int
+    public static function getMinValue(): float
     {
         return PHP_INT_MIN;
     }
@@ -42,9 +42,9 @@ trait DecimalValue
     /**
      * 最大値を取得する
      *
-     * @return int
+     * @return float
      */
-    public static function getMaxValue(): int
+    public static function getMaxValue(): float
     {
         return PHP_INT_MAX;
     }
@@ -80,7 +80,7 @@ trait DecimalValue
             filter_var($value, FILTER_VALIDATE_FLOAT) === false) {
             return false;
         }
-        return self::isValidValue(intval($value));
+        return self::isValidValue(floatval($value));
     }
 
     /**
