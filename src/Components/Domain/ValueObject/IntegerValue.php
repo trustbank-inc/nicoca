@@ -34,7 +34,7 @@ trait IntegerValue
      *
      * @return int
      */
-    public static function getMinValue(): int
+    private static function getMinValue(): int
     {
         return PHP_INT_MIN;
     }
@@ -44,7 +44,7 @@ trait IntegerValue
      *
      * @return int
      */
-    public static function getMaxValue(): int
+    private static function getMaxValue(): int
     {
         return PHP_INT_MAX;
     }

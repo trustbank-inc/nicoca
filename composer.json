@@ -11,7 +11,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Seasalt\\Nicoca\\": "src"
+            "Seasalt\\Nicoca\\": "src",
+            "Tests\\": "tests"
         }
     },
     "extra": {
@@ -20,5 +21,8 @@
                 "Seasalt\\Nicoca\\ComponentServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
     }
 }

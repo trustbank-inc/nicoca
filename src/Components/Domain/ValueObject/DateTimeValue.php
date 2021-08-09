@@ -60,7 +60,6 @@ trait DateTimeValue
 	 *
 	 * @param DateTimeImmutable $value
 	 * @return bool
-	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public static function isValidValue(DateTimeImmutable $value): bool
 	{
@@ -72,18 +71,18 @@ trait DateTimeValue
 	 *
 	 * @return static
 	 */
-	public static final function now(): self
+	public static final function now(): static
 	{
 		return new static(new DateTimeImmutable());
 	}
 
-	/**
-	 * 文字列からオブジェクトを生成する
-	 *
-	 * @param string $value
-	 * @return DateTimeValue
-	 */
-	public static final function fromString(string $value): self
+    /**
+     * 文字列からオブジェクトを生成する
+     *
+     * @param string $value
+     * @return static
+     */
+	public static final function fromString(string $value): static
 	{
 		if (!static::isValidString($value)) {
 			throw new InvalidValueException($value, static::class);
@@ -95,7 +94,7 @@ trait DateTimeValue
 	 * @param DateTimeImmutable $value
 	 * @return static
 	 */
-	public static final function fromDateTime(DateTimeImmutable $value): self
+	public static final function fromDateTime(DateTimeImmutable $value): static
 	{
 		if (!static::isValidValue($value)) {
 			throw new InvalidValueException($value->format(static::getFormat()), static::class);
@@ -110,6 +109,6 @@ trait DateTimeValue
 	 */
 	private static function getFormat(): string
 	{
-		return 'U';
+		return 'Y-m-d\TH:i:sP';
 	}
 }
