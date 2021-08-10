@@ -1,6 +1,6 @@
 {
     "name": "seasalt/nicoca",
-    "description": "A PHP Clean architecture components",
+    "description": "PHP Clean architecture components",
     "authors": [{
         "name": "youhei-ushio"
     }],
