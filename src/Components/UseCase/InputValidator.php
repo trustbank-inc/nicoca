@@ -60,6 +60,9 @@ final class InputValidator
             }
             if (is_array($className)) {
                 foreach ($input[$fieldName] as $child) {
+                    if (!is_array($child)) {
+                        $this->errors[] = "{$fieldName} is not array";
+                    }
                     $this->validateFields(input: $child, fields: $className, required: $required);
                 }
                 continue;
