@@ -85,6 +85,12 @@ final class InputValidatorTest extends TestCase
                 [
                     'quantity' => '100',
                 ],
+                [
+                    'quantity' => '200',
+                ],
+                [
+                    'quantity' => '300',
+                ],
             ],
         ]);
     }
@@ -111,6 +117,12 @@ final class InputValidatorTest extends TestCase
             'detail' => [
                 [
                     'quantity' => '3',
+                ],
+                [
+                    'quantity' => '4',
+                ],
+                [
+                    'quantity' => '5',
                 ],
             ],
         ]);
