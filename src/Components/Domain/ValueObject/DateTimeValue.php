@@ -38,7 +38,7 @@ trait DateTimeValue
 	 */
 	public function __toString(): string
 	{
-		return $this->value->format('U');
+		return $this->value->format(static::getFormat());
 	}
 
 	/**
