@@ -13,6 +13,9 @@ final class InputValidator
     /** @var array エラーがあったフィールド */
     private array $errors = [];
 
+    /** @var array validateが通過し、各フィールドをインスタンス化したものを含んだ配列 */
+    private array $validated = [];
+
     /**
      * @param array $requiredFields 必須項目
      * @param array $optionalFields 省略可能項目
@@ -38,6 +41,7 @@ final class InputValidator
         if (count($this->errors) > 0) {
             throw new InvalidInputException(errors: $this->errors, input: $input);
         }
+        $this->setValidated($input);
     }
 
     /**
@@ -79,6 +83,58 @@ final class InputValidator
                 if (!$className::isValidString((string)$input[$fieldName])) {
                     $this->errors[] = "{$fieldName} is invalid";
                 }
+            }
+        }
+    }
+
+    /**
+     * $validatedのGetter
+     * 
+     * @param string|null $fieldName
+     * @return mixed
+     */
+    public function getValidated(?string $fieldName): mixed
+    {
+        if (isset($fieldName)) {
+            return $this->validated[$fieldName];
+        }
+        return $this->validated;
+    }
+
+    /**
+     * $validatedのSetter
+     * 
+     * @param string[]|string[][]|string[][][] $input
+     * @return void
+     */
+    private function setValidated(array $input): void
+    {
+        $fields = array_merge($this->requiredFields, $this->optionalFields);
+        foreach ($fields as $fieldName => $className) {
+            if (isset($input[$fieldName])) {
+                if (is_array($className)) {
+                    foreach ($input[$fieldName] as $index => $childInput) {
+                        foreach ($className as $childFieldName => $childClassName) {
+                            if (isset($childInput[$childFieldName])) {
+                                $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString($childInput[$childFieldName]);
+                            }
+                            else {
+                                $this->validated[$fieldName][$index][$childFieldName] = null;
+                            }
+                        }
+                    } 
+                } else {
+                    if (is_array($input[$fieldName])) {
+                        foreach ($input[$fieldName] as $value) {
+                            $this->validated[$fieldName][] = $className::fromString($value);
+                        }
+                    } else {
+                        $this->validated[$fieldName] = $className::fromString($input[$fieldName]);
+                    }
+                }
+            }
+            else {
+                $this->validated[$fieldName] = null;
             }
         }
     }
