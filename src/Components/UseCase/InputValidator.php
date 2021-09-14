@@ -43,8 +43,8 @@ final class InputValidator
     /**
      * ユースケースの入力値を検証する
      *
-     * @param string[]|string[][] $input 文字列で指定される配列（POST値を想定）
-     * @param array<string, string> $fields フィールド名+型
+     * @param string[]|string[][]|string[][][] $input 文字列で指定される配列（POST値を想定）
+     * @param string[]|string[][] $fields フィールド名+型
      * @param bool $required 必須パラメータかどうか
      * @note $fieldsの各フィールド型はisValidString()を実装している必要がある。
      * @see StringValue
@@ -58,6 +58,7 @@ final class InputValidator
                 }
                 continue;
             }
+
             if (is_array($className)) {
                 foreach ($input[$fieldName] as $child) {
                     if (!is_array($child)) {
