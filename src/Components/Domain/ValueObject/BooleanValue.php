@@ -32,11 +32,12 @@ trait BooleanValue
     /**
      * インスタンス生成元として有効な文字列かどうか確認する
      *
-     * @param string $value
+     * @param string|null $value
      * @return bool
      */
-    public static function isValidString(string $value): bool
+    public static function isValidString(?string $value): bool
     {
+        if (is_null($value)) return false;
         return in_array(
             needle: strtolower($value),
             haystack: array_merge(self::getTrueValues(), self::getFalseValues()));
@@ -45,10 +46,10 @@ trait BooleanValue
     /**
      * 文字列からオブジェクトを生成する
      *
-     * @param string $value
+     * @param string|null $value
      * @return static
      */
-    public static function fromString(string $value): static
+    public static function fromString(?string $value): static
     {
         if (!self::isValidString($value)) {
             throw new InvalidValueException($value, static::class);
