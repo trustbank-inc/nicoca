@@ -10,7 +10,7 @@ use RuntimeException;
  */
 final class InvalidValueException extends RuntimeException
 {
-    public function __construct(string $value, string $className)
+    public function __construct(?string $value, string $className)
     {
         parent::__construct("{$className}に適合しない値です。({$value})", 0, null);
     }
