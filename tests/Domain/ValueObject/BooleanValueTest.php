@@ -34,4 +34,10 @@ final class BooleanValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         BooleanValueMock::fromString('100');
     }
+
+    public function testCannotBeValidatedOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        BooleanValueMock::fromString(null);
+    }
 }

@@ -19,8 +19,13 @@ final class StringValueMock
         return 20;
     }
 
-    private static function isValidValue(string $value): bool
+    private static function isValidValue(?string $value): bool
     {
         return !str_contains(haystack: $value, needle: '**INVALID**');
     }
+}
+
+final class StringValueMockForNullTest
+{
+    use StringValue;
 }

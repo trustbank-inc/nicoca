@@ -20,4 +20,16 @@ final class DateTimeValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         DateTimeValueMock::fromString('2021-04-01T12:00:00+09:00');
     }
+
+    public function testCannotBeValidatedFromStringOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        DateTimeValueMock::fromString(null);
+    }
+
+    public function testCannotBeValidatedFromDateTimeOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        DateTimeValueMock::fromDateTime(null);
+    }
 }

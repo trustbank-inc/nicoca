@@ -99,7 +99,7 @@ trait DateTimeValue
 	public static final function fromDateTime(?DateTimeImmutable $value): static
 	{
 		if (!static::isValidValue($value)) {
-			throw new InvalidValueException($value->format(static::getFormat()), static::class);
+			throw new InvalidValueException($value?$value->format(static::getFormat()):'', static::class);
 		}
 		return new static($value);
 	}

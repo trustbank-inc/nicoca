@@ -55,4 +55,16 @@ final class IntegerValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         IntegerValueMock::fromNumber(7);
     }
+
+    public function testCannotBeValidatedFromNumberOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        DecimalValueMock::fromNumber(null);
+    }
+
+    public function testCannotBeValidatedFromStringOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        DecimalValueMock::fromString(null);
+    }
 }
