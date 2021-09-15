@@ -44,11 +44,14 @@ trait DateTimeValue
 	/**
 	 * 有効な文字列かどうか確認する
 	 *
-	 * @param string $value
+	 * @param string|null $value
 	 * @return bool
 	 */
-	public static final function isValidString(string $value): bool
+	public static final function isValidString(string|null $value): bool
 	{
+		if ($value === null) {
+			return false;
+		}
 		if (DateTimeImmutable::createFromFormat(format: static::getFormat(), datetime: $value) === false) {
 			return false;
 		}
@@ -58,11 +61,14 @@ trait DateTimeValue
 	/**
 	 * 有効な値かどうか確認する
 	 *
-	 * @param DateTimeImmutable $value
+	 * @param DateTimeImmutable|null $value
 	 * @return bool
 	 */
-	public static function isValidValue(DateTimeImmutable $value): bool
+	public static function isValidValue(DateTimeImmutable|null $value): bool
 	{
+		if ($value === null) {
+			return false;
+		}
 		return true;
 	}
 
@@ -79,10 +85,10 @@ trait DateTimeValue
     /**
      * 文字列からオブジェクトを生成する
      *
-     * @param string $value
+     * @param string|null $value
      * @return static
      */
-	public static final function fromString(string $value): static
+	public static final function fromString(string|null $value): static
 	{
 		if (!static::isValidString($value)) {
 			throw new InvalidValueException($value, static::class);
@@ -91,13 +97,13 @@ trait DateTimeValue
 	}
 
 	/**
-	 * @param DateTimeImmutable $value
+	 * @param DateTimeImmutable|null $value
 	 * @return static
 	 */
-	public static final function fromDateTime(DateTimeImmutable $value): static
+	public static final function fromDateTime(DateTimeImmutable|null $value): static
 	{
 		if (!static::isValidValue($value)) {
-			throw new InvalidValueException($value->format(static::getFormat()), static::class);
+			throw new InvalidValueException($value?->format(static::getFormat()), static::class);
 		}
 		return new static($value);
 	}

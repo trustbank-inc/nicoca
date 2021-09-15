@@ -55,4 +55,16 @@ final class DecimalValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         DecimalValueMock::fromNumber(777.25);
     }
+
+    public function testCannotBeValidatedFromNumberOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        DecimalValueMock::fromNumber(null);
+    }
+
+    public function testCannotBeValidatedFromStringOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        DecimalValueMock::fromString(null);
+    }
 }

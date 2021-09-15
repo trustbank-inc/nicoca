@@ -69,11 +69,14 @@ trait StringValue
     /**
      * インスタンス生成元として有効な文字列かどうか確認する
      *
-     * @param string $value
+     * @param string|null $value
      * @return bool
      */
-    public static function isValidString(string $value): bool
+    public static function isValidString(string|null $value): bool
     {
+        if ($value === null) {
+            $value = '';
+        }
         $min = static::getMinLength();
         if (mb_strlen($value, 'UTF-8') < $min) {
             return false;
@@ -90,10 +93,10 @@ trait StringValue
      *
      * 実装クラスでの制限用
      *
-     * @param string $value
+     * @param string|null $value
      * @return bool
      */
-    public static function isValidValue(string $value): bool
+    public static function isValidValue(string|null $value): bool
     {
         return true;
     }
@@ -101,11 +104,14 @@ trait StringValue
     /**
      * 文字列からオブジェクトを生成する
      *
-     * @param string $value
+     * @param string|null $value
      * @return static
      */
-    public static function fromString(string $value): static
+    public static function fromString(string|null $value): static
     {
+        if ($value === null) {
+            $value = '';
+        }
         if (!static::isValidString($value)) {
             throw new InvalidValueException($value, static::class);
         }

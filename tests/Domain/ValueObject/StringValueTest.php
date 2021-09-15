@@ -12,6 +12,8 @@ final class StringValueTest extends TestCase
     {
         $value = StringValueMock::fromString('TestString!');
         $this->assertSame('TestString!', $value->getValue());
+        $value = StringValueMockForNullTest::fromString(null);
+        $this->assertSame('', $value->getValue());
     }
 
     public function testCanBeCreatedMinLengthString(): void

@@ -60,21 +60,24 @@ trait DecimalValue
     /**
      * 有効な値かどうか検証する
      *
-     * @param float $value
+     * @param float|null $value
      * @return bool
      */
-    public static function isValidValue(float $value): bool
+    public static function isValidValue(float|null $value): bool
     {
+        if ($value === null) {
+            return false;
+        }
         return $value >= static::getMinValue() && $value <= static::getMaxValue();
     }
 
     /**
      * インスタンス生成元として有効な文字列かどうか確認する
      *
-     * @param string $value
+     * @param string|null $value
      * @return bool
      */
-    public static function isValidString(string $value): bool
+    public static function isValidString(string|null $value): bool
     {
         if (filter_var($value, FILTER_VALIDATE_INT) === false &&
             filter_var($value, FILTER_VALIDATE_FLOAT) === false) {
@@ -86,10 +89,10 @@ trait DecimalValue
     /**
      * 数値からオブジェクトを生成する
      *
-     * @param float $value
+     * @param float|null $value
      * @return static
      */
-    public static function fromNumber(float $value): static
+    public static function fromNumber(float|null $value): static
     {
         if (!static::isValidValue($value)) {
             throw new InvalidValueException((string)$value, static::class);
@@ -100,10 +103,10 @@ trait DecimalValue
     /**
      * 文字列からオブジェクトを生成する
      *
-     * @param string $value
+     * @param string|null $value
      * @return static
      */
-    public static function fromString(string $value): static
+    public static function fromString(string|null $value): static
     {
         if (!self::isValidString($value)) {
             throw new InvalidValueException($value, static::class);
