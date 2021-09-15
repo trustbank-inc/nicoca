@@ -35,7 +35,7 @@ trait BooleanValue
      * @param string|null $value
      * @return bool
      */
-    public static function isValidString(?string $value): bool
+    public static function isValidString(string|null $value): bool
     {
         if ($value === null) {
             return false;
@@ -51,7 +51,7 @@ trait BooleanValue
      * @param string|null $value
      * @return static
      */
-    public static function fromString(?string $value): static
+    public static function fromString(string|null $value): static
     {
         if (!self::isValidString($value)) {
             throw new InvalidValueException($value, static::class);

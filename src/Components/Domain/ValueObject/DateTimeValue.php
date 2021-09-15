@@ -47,7 +47,7 @@ trait DateTimeValue
 	 * @param string|null $value
 	 * @return bool
 	 */
-	public static final function isValidString(?string $value): bool
+	public static final function isValidString(string|null $value): bool
 	{
 		if ($value === null) {
 			return false;
@@ -64,7 +64,7 @@ trait DateTimeValue
 	 * @param DateTimeImmutable|null $value
 	 * @return bool
 	 */
-	public static function isValidValue(?DateTimeImmutable $value): bool
+	public static function isValidValue(DateTimeImmutable|null $value): bool
 	{
 		if ($value === null) {
 			return false;
@@ -88,7 +88,7 @@ trait DateTimeValue
      * @param string|null $value
      * @return static
      */
-	public static final function fromString(?string $value): static
+	public static final function fromString(string|null $value): static
 	{
 		if (!static::isValidString($value)) {
 			throw new InvalidValueException($value, static::class);
@@ -100,7 +100,7 @@ trait DateTimeValue
 	 * @param DateTimeImmutable|null $value
 	 * @return static
 	 */
-	public static final function fromDateTime(?DateTimeImmutable $value): static
+	public static final function fromDateTime(DateTimeImmutable|null $value): static
 	{
 		if (!static::isValidValue($value)) {
 			throw new InvalidValueException($value?->format(static::getFormat()), static::class);
