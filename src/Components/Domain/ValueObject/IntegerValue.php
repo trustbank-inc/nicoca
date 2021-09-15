@@ -65,7 +65,9 @@ trait IntegerValue
      */
     public static function isValidValue(?int $value): bool
     {
-        if (is_null($value)) return false;
+        if ($value === null) {
+            return false;
+        }
         return $value >= static::getMinValue() && $value <= static::getMaxValue();
     }
 

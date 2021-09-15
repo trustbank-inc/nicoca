@@ -49,7 +49,9 @@ trait DateTimeValue
 	 */
 	public static final function isValidString(?string $value): bool
 	{
-		if (is_null($value)) return false;
+		if ($value === null) {
+			return false;
+		}
 		if (DateTimeImmutable::createFromFormat(format: static::getFormat(), datetime: $value) === false) {
 			return false;
 		}
@@ -64,7 +66,9 @@ trait DateTimeValue
 	 */
 	public static function isValidValue(?DateTimeImmutable $value): bool
 	{
-		if (is_null($value)) return false;
+		if ($value === null) {
+			return false;
+		}
 		return true;
 	}
 
@@ -99,7 +103,7 @@ trait DateTimeValue
 	public static final function fromDateTime(?DateTimeImmutable $value): static
 	{
 		if (!static::isValidValue($value)) {
-			throw new InvalidValueException($value?$value->format(static::getFormat()):'', static::class);
+			throw new InvalidValueException($value?->format(static::getFormat()), static::class);
 		}
 		return new static($value);
 	}

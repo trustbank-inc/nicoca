@@ -65,7 +65,9 @@ trait DecimalValue
      */
     public static function isValidValue(?float $value): bool
     {
-        if (is_null($value)) return false;
+        if ($value === null) {
+            return false;
+        }
         return $value >= static::getMinValue() && $value <= static::getMaxValue();
     }
 

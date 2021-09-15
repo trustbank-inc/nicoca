@@ -74,7 +74,9 @@ trait StringValue
      */
     public static function isValidString(?string $value): bool
     {
-        if (is_null($value)) $value = '';
+        if ($value === null) {
+            $value = '';
+        }
         $min = static::getMinLength();
         if (mb_strlen($value, 'UTF-8') < $min) {
             return false;
@@ -107,7 +109,9 @@ trait StringValue
      */
     public static function fromString(?string $value): static
     {
-        if (is_null($value)) $value = '';
+        if ($value === null) {
+            $value = '';
+        }
         if (!static::isValidString($value)) {
             throw new InvalidValueException($value, static::class);
         }

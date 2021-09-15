@@ -111,30 +111,28 @@ final class InputValidator
     {
         $fields = array_merge($this->requiredFields, $this->optionalFields);
         foreach ($fields as $fieldName => $className) {
-            if (isset($input[$fieldName])) {
-                if (is_array($className)) {
-                    foreach ($input[$fieldName] as $index => $childInput) {
-                        foreach ($className as $childFieldName => $childClassName) {
-                            if (isset($childInput[$childFieldName])) {
-                                $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString($childInput[$childFieldName]);
-                            }
-                            else {
-                                $this->validated[$fieldName][$index][$childFieldName] = null;
-                            }
-                        }
-                    } 
-                } else {
-                    if (is_array($input[$fieldName])) {
-                        foreach ($input[$fieldName] as $value) {
-                            $this->validated[$fieldName][] = $className::fromString($value);
-                        }
-                    } else {
-                        $this->validated[$fieldName] = $className::fromString($input[$fieldName]);
-                    }
-                }
-            }
-            else {
+            if (!isset($input[$fieldName])) {
                 $this->validated[$fieldName] = null;
+                continue;
+            }
+            if (is_array($className)) {
+                foreach ($input[$fieldName] as $index => $childInput) {
+                    foreach ($className as $childFieldName => $childClassName) {
+                        if (!isset($childInput[$childFieldName])) {
+                            $this->validated[$fieldName][$index][$childFieldName] = null;
+                            continue;
+                        }
+                        $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString($childInput[$childFieldName]);
+                    }
+                } 
+            } else {
+                if (is_array($input[$fieldName])) {
+                    foreach ($input[$fieldName] as $value) {
+                        $this->validated[$fieldName][] = $className::fromString($value);
+                    }
+                } else {
+                    $this->validated[$fieldName] = $className::fromString($input[$fieldName]);
+                }
             }
         }
     }

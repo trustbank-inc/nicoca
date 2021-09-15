@@ -37,7 +37,9 @@ trait BooleanValue
      */
     public static function isValidString(?string $value): bool
     {
-        if (is_null($value)) return false;
+        if ($value === null) {
+            return false;
+        }
         return in_array(
             needle: strtolower($value),
             haystack: array_merge(self::getTrueValues(), self::getFalseValues()));
