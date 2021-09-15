@@ -21,7 +21,7 @@ final class IntegerValueMock
         return 9999;
     }
 
-    private static function isValidValue(?int $value): bool
+    private static function isValidValue(int|null $value): bool
     {
         return self::_isValidValue($value) && $value !== 7;
     }

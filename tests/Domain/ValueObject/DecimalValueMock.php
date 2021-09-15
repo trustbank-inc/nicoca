@@ -21,7 +21,7 @@ final class DecimalValueMock
         return 1000.75;
     }
 
-    private static function isValidValue(?float $value): bool
+    private static function isValidValue(float|null $value): bool
     {
         return self::_isValidValue($value) && $value !== 777.25;
     }
