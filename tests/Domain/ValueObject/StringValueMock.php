@@ -24,8 +24,3 @@ final class StringValueMock
         return !str_contains(haystack: $value, needle: '**INVALID**');
     }
 }
-
-final class StringValueMockForNullTest
-{
-    use StringValue;
-}
