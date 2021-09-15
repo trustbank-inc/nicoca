@@ -122,16 +122,16 @@ final class InputValidator
                             $this->validated[$fieldName][$index][$childFieldName] = null;
                             continue;
                         }
-                        $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString($childInput[$childFieldName]);
+                        $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString((string)$childInput[$childFieldName]);
                     }
                 } 
             } else {
                 if (is_array($input[$fieldName])) {
                     foreach ($input[$fieldName] as $value) {
-                        $this->validated[$fieldName][] = $className::fromString($value);
+                        $this->validated[$fieldName][] = $className::fromString((string)$value);
                     }
                 } else {
-                    $this->validated[$fieldName] = $className::fromString($input[$fieldName]);
+                    $this->validated[$fieldName] = $className::fromString((string)$input[$fieldName]);
                 }
             }
         }
