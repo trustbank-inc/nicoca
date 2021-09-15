@@ -93,7 +93,7 @@ final class InputValidator
      * @param string|null $fieldName
      * @return mixed
      */
-    public function getValidated(?string $fieldName): mixed
+    public function getValidated(?string $fieldName=null): mixed
     {
         if (isset($fieldName)) {
             return $this->validated[$fieldName];
