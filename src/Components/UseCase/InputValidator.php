@@ -48,7 +48,7 @@ final class InputValidator
      * ユースケースの入力値を検証する
      *
      * @param string[]|string[][]|string[][][] $input 文字列で指定される配列（POST値を想定）
-     * @param string[]|string[][] $fields フィールド名+型
+     * @param array $fields フィールド名+型
      * @param bool $required 必須パラメータかどうか
      * @note $fieldsの各フィールド型はisValidString()を実装している必要がある。
      * @see StringValue
@@ -58,7 +58,7 @@ final class InputValidator
         foreach ($fields as $fieldName => $className) {
             if (!isset($input[$fieldName]) || $input[$fieldName] === '' || $input[$fieldName] === []) {
                 if ($required) {
-                    $this->errors[] = "{$fieldName} is required";
+                    $this->errors[] = "$fieldName is required";
                 }
                 continue;
             }
@@ -66,7 +66,7 @@ final class InputValidator
             if (is_array($className)) {
                 foreach ($input[$fieldName] as $child) {
                     if (!is_array($child)) {
-                        $this->errors[] = "{$fieldName} is not array";
+                        $this->errors[] = "$fieldName is not array";
                     }
                     $this->validateFields(input: $child, fields: $className, required: $required);
                 }
@@ -76,12 +76,12 @@ final class InputValidator
             if (is_array($input[$fieldName])) {
                 foreach ($input[$fieldName] as $index => $inputValue) {
                     if (!$className::isValidString((string)$inputValue)) {
-                        $this->errors[] = "{$fieldName}.{$index} is invalid";
+                        $this->errors[] = "$fieldName.$index is invalid";
                     }
                 }
             } else {
                 if (!$className::isValidString((string)$input[$fieldName])) {
-                    $this->errors[] = "{$fieldName} is invalid";
+                    $this->errors[] = "$fieldName is invalid";
                 }
             }
         }
