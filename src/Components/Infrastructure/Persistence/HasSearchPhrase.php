@@ -13,12 +13,15 @@ trait HasSearchPhrase
      * 検索フレーズに応じたwhere句を組み立てる
      *
      * @param EloquentBuilder|QueryBuilder $builder クエリビルダ
-     * @param SearchPhrase $searchPhrase 検索フレーズ
+     * @param SearchPhrase|null $searchPhrase 検索フレーズ
      * @param array $fields 検索対象とするフィールド名
      */
-    private function buildSearchPhraseWhereClauses(EloquentBuilder|QueryBuilder $builder, SearchPhrase $searchPhrase, array $fields): void
+    private function buildSearchPhraseWhereClauses(
+        EloquentBuilder|QueryBuilder $builder,
+        SearchPhrase|null $searchPhrase,
+        array $fields): void
     {
-        if (!$searchPhrase->hasValue()) {
+        if (!$searchPhrase?->hasValue()) {
             return;
         }
         if ($searchPhrase->isPartialMatch()) {
