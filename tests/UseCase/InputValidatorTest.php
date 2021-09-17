@@ -224,6 +224,7 @@ final class InputValidatorTest extends TestCase
                 'null_title' => ExampleTitle::class,
                 'detail' => [
                     'quantity' => ExampleQuantity::class,
+                    'description' => ExampleTitle::class,
                 ],
             ]);
         $validator->validate([
@@ -251,12 +252,15 @@ final class InputValidatorTest extends TestCase
         $this->assertEquals([
                 [
                     'quantity' => ExampleQuantity::fromString('2'),
+                    'description' => null,
                 ],
                 [
                     'quantity' => ExampleQuantity::fromString('4'),
+                    'description' => null,
                 ],
                 [
                     'quantity' => ExampleQuantity::fromString('6'),
+                    'description' => null,
                 ],
             ], $validator->getValidated('detail'));
         $this->assertEquals([
@@ -270,14 +274,69 @@ final class InputValidatorTest extends TestCase
                 'detail' => [
                     [
                         'quantity' => ExampleQuantity::fromString('2'),
+                        'description' => null,
                     ],
                     [
                         'quantity' => ExampleQuantity::fromString('4'),
+                        'description' => null,
                     ],
                     [
                         'quantity' => ExampleQuantity::fromString('6'),
+                        'description' => null,
                     ],
                 ]
             ], $validator->getValidated());
+    }
+
+    /**
+     *
+     */
+    public function testCanBeExceptedRequiredValueMissing()
+    {
+        $this->expectException(InvalidInputException::class);
+
+        $validator = new InputValidator(
+            requiredFields: [
+                'title' => ExampleTitle::class,
+            ]);
+        $validator->validate([]);
+    }
+
+    /**
+     *
+     */
+    public function testCanBeExceptedInvalidArrayValue()
+    {
+        $this->expectException(InvalidInputException::class);
+
+        $validator = new InputValidator(
+            requiredFields: [
+                'records' => [
+                    'title' => ExampleTitle::class,
+                ],
+            ]);
+        $validator->validate([
+            'records' => 'test',
+        ]);
+    }
+
+    /**
+     *
+     */
+    public function testCanBeExceptedInvalidNestedArrayValue()
+    {
+        $this->expectException(InvalidInputException::class);
+
+        $validator = new InputValidator(
+            requiredFields: [
+                'records' => [
+                    'title' => ExampleTitle::class,
+                ],
+            ]);
+        $validator->validate([
+            'records' => [
+                'test',
+            ],
+        ]);
     }
 }
