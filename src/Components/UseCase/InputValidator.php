@@ -56,7 +56,7 @@ final class InputValidator
     private function validateFields(array $input, array $fields, bool $required): void
     {
         foreach ($fields as $fieldName => $className) {
-            if (!isset($input[$fieldName]) || $input[$fieldName] === '' || $input[$fieldName] === []) {
+            if (!$this->inputValueExists($input, $fieldName, $className)) {
                 if ($required) {
                     $this->errors[] = "$fieldName is required";
                 }
@@ -67,9 +67,16 @@ final class InputValidator
                 if (!is_array($input[$fieldName])) {
                     $this->errors[] = "$fieldName is not array";
                 } else {
-                    foreach ($input[$fieldName] as $child) {
+                    foreach ($input[$fieldName] as $key => $child) {
                         if (!is_array($child)) {
-                            $this->errors[] = "$fieldName is not array";
+                            if (!isset($className[$key])) {
+                                $this->errors[] = "$fieldName.$key is invalid";
+                                continue;
+                            }
+                            $childClassName = $className[$key];
+                            if (!$childClassName::isValidString((string)$child)) {
+                                $this->errors[] = "$fieldName.$key is invalid";
+                            }
                             continue;
                         }
                         $this->validateFields(input: $child, fields: $className, required: $required);
@@ -78,18 +85,71 @@ final class InputValidator
                 continue;
             }
 
-            if (is_array($input[$fieldName])) {
-                foreach ($input[$fieldName] as $index => $inputValue) {
-                    if (!$className::isValidString((string)$inputValue)) {
-                        $this->errors[] = "$fieldName.$index is invalid";
-                    }
+            if (str_contains(haystack: $fieldName, needle: '.')) {
+                $nestedInputValue = $input;
+                foreach (explode(separator: '.', string: $fieldName) as $fieldPart) {
+                    $nestedInputValue = $nestedInputValue[$fieldPart];
+                }
+                if (!$className::isValidString((string)$nestedInputValue)) {
+                    $this->errors[] = "$fieldName is invalid";
                 }
             } else {
-                if (!$className::isValidString((string)$input[$fieldName])) {
-                    $this->errors[] = "$fieldName is invalid";
+                if (is_array($input[$fieldName])) {
+                    foreach ($input[$fieldName] as $index => $inputValue) {
+                        if (!$className::isValidString((string)$inputValue)) {
+                            $this->errors[] = "$fieldName.$index is invalid";
+                        }
+                    }
+                } else {
+                    if (!$className::isValidString((string)$input[$fieldName])) {
+                        $this->errors[] = "$fieldName is invalid";
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * @param array $input
+     * @param string $fieldName
+     * @param string|array $field
+     * @return bool
+     */
+    private function inputValueExists(array $input, string $fieldName, string|array $field): bool
+    {
+        if (!is_array($field)) {
+            if (str_contains(haystack: $fieldName, needle: '.')) {
+                $nestedInputValue = $input;
+                foreach (explode(separator: '.', string: $fieldName) as $fieldPart) {
+                    if (!isset($nestedInputValue[$fieldPart])) {
+                        return false;
+                    }
+                    $nestedInputValue = $nestedInputValue[$fieldPart];
+                }
+                return $nestedInputValue !== '';
+            } else {
+                return isset($input[$fieldName]) && $input[$fieldName] !== '';
+            }
+        }
+
+        if (!isset($input[$fieldName]) || !is_array($input[$fieldName])) {
+            return false;
+        }
+
+        foreach ($field as $childFieldName => $childFieldClassName) {
+            if (!isset($input[$fieldName])) {
+                return false;
+            }
+            if (!is_array($input[$fieldName])) {
+                return false;
+            }
+            foreach ($input[$fieldName] as $childInput) {
+                if (!isset($childInput[$childFieldName]) || $childInput[$childFieldName] === '') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
