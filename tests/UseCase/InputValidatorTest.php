@@ -339,4 +339,58 @@ final class InputValidatorTest extends TestCase
             ],
         ]);
     }
+
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testCanBeValidatedNonArrayNestedValue(): void
+    {
+        $validator = new InputValidator(
+            requiredFields: [
+                'book.title' => ExampleTitle::class,
+            ]);
+        $validator->validate([
+            'book' => [
+                'title' => 'abcdefg',
+            ],
+        ]);
+    }
+
+    /**
+     *
+     */
+    public function testCanBeExceptedNonArrayNestedValue(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('book.title is invalid');
+
+        $validator = new InputValidator(
+            requiredFields: [
+                'book.title' => ExampleTitle::class,
+            ]);
+        $validator->validate([
+            'book' => [
+                'title' => 'abcdefgaaaaaaaaaaaaaaaaaaaaa',
+            ],
+        ]);
+    }
+
+    /**
+     *
+     */
+    public function testCanBeExceptedNonArrayNestedValueRequired(): void
+    {
+        $this->expectException(InvalidInputException::class);
+        $this->expectExceptionMessage('book.title is required');
+
+        $validator = new InputValidator(
+            requiredFields: [
+                'book.title' => ExampleTitle::class,
+            ]);
+        $validator->validate([
+            'book' => [
+
+            ],
+        ]);
+    }
 }
