@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Seasalt\Nicoca\Components\Domain\ValueObject;
@@ -16,7 +17,6 @@ trait BooleanValue
      */
     private function __construct(private bool $value)
     {
-
     }
 
     /**
@@ -42,7 +42,8 @@ trait BooleanValue
         }
         return in_array(
             needle: strtolower($value),
-            haystack: array_merge(self::getTrueValues(), self::getFalseValues()));
+            haystack: array_merge(self::getTrueValues(), self::getFalseValues())
+        );
     }
 
     /**
@@ -58,7 +59,22 @@ trait BooleanValue
         }
         return new self(in_array(
             needle: strtolower($value),
-            haystack: self::getTrueValues()));
+            haystack: self::getTrueValues()
+        ));
+    }
+
+    /**
+     * booleanからオブジェクトを生成する
+     *
+     * @param bool|null $value
+     * @return static
+     */
+    public static function fromBoolean(bool|null $value): static
+    {
+        if ($value === null) {
+            throw new InvalidValueException($value, static::class);
+        }
+        return new self($value);
     }
 
     /**

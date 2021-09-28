@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Domain\ValueObject;
@@ -39,5 +40,19 @@ final class BooleanValueTest extends TestCase
     {
         $this->expectException(InvalidValueException::class);
         BooleanValueMock::fromString(null);
+    }
+
+    public function testCanBeCreatedFromBoolean(): void
+    {
+        $value = BooleanValueMock::fromBoolean(true);
+        $this->assertTrue($value->getValue());
+        $value = BooleanValueMock::fromBoolean(false);
+        $this->assertFalse($value->getValue());
+    }
+
+    public function testCanBeExceptedFromBooleanOnNull(): void
+    {
+        $this->expectException(InvalidValueException::class);
+        BooleanValueMock::fromBoolean(null);
     }
 }
