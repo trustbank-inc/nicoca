@@ -192,6 +192,7 @@ final class InputValidator
                 } 
             } else {
                 if (is_array($input[$fieldName])) {
+                    $this->validated[$fieldName] = [];
                     foreach ($input[$fieldName] as $value) {
                         $this->validated[$fieldName][] = $className::fromString((string)$value);
                     }

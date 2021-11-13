@@ -393,4 +393,22 @@ final class InputValidatorTest extends TestCase
             ],
         ]);
     }
+
+    /**
+     * 空の配列をvalidatedで取得できること
+     */
+    public function testCanGetValidatedEmptyArray(): void
+    {
+        $validator = new InputValidator(
+            requiredFields: [
+                'titles' => ExampleTitle::class,
+            ]);
+        $validator->validate([
+            'titles' => [],
+        ]);
+        $this->assertSame(
+            expected: [],
+            actual: $validator->getValidated('titles')
+        );
+    }
 }
