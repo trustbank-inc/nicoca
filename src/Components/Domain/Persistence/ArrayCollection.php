@@ -9,7 +9,7 @@ use Traversable;
 
 final class ArrayCollection implements Collection
 {
-    public function __construct(private array $elements)
+    public function __construct(protected array $elements)
     {
 
     }
