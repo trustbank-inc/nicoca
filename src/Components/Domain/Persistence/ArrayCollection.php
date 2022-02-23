@@ -7,7 +7,7 @@ namespace Seasalt\Nicoca\Components\Domain\Persistence;
 use ArrayIterator;
 use Traversable;
 
-final class ArrayCollection implements Collection
+class ArrayCollection implements Collection
 {
     public function __construct(protected array $elements)
     {
