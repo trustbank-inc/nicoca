@@ -30,12 +30,16 @@ trait StringValue
     }
 
     /**
-     * @param self $value
+     * @param string|StringValue $value
      * @return bool
      */
-    public function equals(self $value): bool
+    public function equals(self|string $value): bool
     {
-        return $this->value === $value->value;
+        if ($value instanceof self) {
+            return $value->value === $this->value;
+        } else {
+            return $value === $value->value;
+        }
     }
 
     /**

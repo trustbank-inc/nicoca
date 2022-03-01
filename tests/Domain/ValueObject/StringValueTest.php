@@ -45,4 +45,15 @@ final class StringValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         StringValueMock::fromString('abc**INVALID**');
     }
+
+    public function testCanCompareValues(): void
+    {
+        $value = StringValueMock::fromString('abc');
+        $this->assertTrue($value->equals('abc'));
+
+        $value2 = StringValueMock::fromString('def');
+        $value3 = StringValueMock::fromString('abc');
+        $this->assertFalse($value->equals($value2));
+        $this->assertTrue($value->equals($value3));
+    }
 }
