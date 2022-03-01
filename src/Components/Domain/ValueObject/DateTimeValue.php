@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Seasalt\Nicoca\Components\Domain\ValueObject;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 
 /**
  * 日時の値オブジェクトの性質を提供する
@@ -32,6 +33,21 @@ trait DateTimeValue
 	{
 		return $this->value;
 	}
+
+    /**
+     * @param DateTimeValue|DateTimeInterface|string $value
+     * @return bool
+     */
+    public function equals(self|DateTimeInterface|string $value): bool
+    {
+        if ($value instanceof self) {
+            return $value->value === $this->value;
+        } elseif ($value instanceof DateTimeInterface) {
+            return $value->format(self::getFormat()) === $this->value->format(self::getFormat());
+        } else {
+            return $value === $this->value->format(self::getFormat());
+        }
+    }
 
 	/**
 	 * @return string

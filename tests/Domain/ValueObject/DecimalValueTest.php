@@ -67,4 +67,15 @@ final class DecimalValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         DecimalValueMock::fromString(null);
     }
+
+    public function testCanCompareValues(): void
+    {
+        $value = DecimalValueMock::fromNumber(123.45);
+        $this->assertTrue($value->equals(123.45));
+
+        $value2 = DecimalValueMock::fromNumber(555.123);
+        $value3 = DecimalValueMock::fromNumber(123.45);
+        $this->assertFalse($value->equals($value2));
+        $this->assertTrue($value->equals($value3));
+    }
 }

@@ -59,12 +59,23 @@ final class IntegerValueTest extends TestCase
     public function testCannotBeValidatedFromNumberOnNull(): void
     {
         $this->expectException(InvalidValueException::class);
-        DecimalValueMock::fromNumber(null);
+        IntegerValueMock::fromNumber(null);
     }
 
     public function testCannotBeValidatedFromStringOnNull(): void
     {
         $this->expectException(InvalidValueException::class);
-        DecimalValueMock::fromString(null);
+        IntegerValueMock::fromString(null);
+    }
+
+    public function testCanCompareValues(): void
+    {
+        $value = IntegerValueMock::fromNumber(1000);
+        $this->assertTrue($value->equals(1000));
+
+        $value2 = IntegerValueMock::fromNumber(5555);
+        $value3 = IntegerValueMock::fromNumber(1000);
+        $this->assertFalse($value->equals($value2));
+        $this->assertTrue($value->equals($value3));
     }
 }

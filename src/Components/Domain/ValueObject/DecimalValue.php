@@ -30,6 +30,19 @@ trait DecimalValue
     }
 
     /**
+     * @param float|DecimalValue $value
+     * @return bool
+     */
+    public function equals(self|float $value): bool
+    {
+        if ($value instanceof self) {
+            return $value->value === $this->value;
+        } else {
+            return $value === $this->value;
+        }
+    }
+
+    /**
      * 最小値を取得する
      *
      * @return float

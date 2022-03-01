@@ -30,6 +30,19 @@ trait BooleanValue
     }
 
     /**
+     * @param bool|BooleanValue $value
+     * @return bool
+     */
+    public function equals(self|bool $value): bool
+    {
+        if ($value instanceof self) {
+            return $value->value === $this->value;
+        } else {
+            return $value === $this->value;
+        }
+    }
+
+    /**
      * インスタンス生成元として有効な文字列かどうか確認する
      *
      * @param string|null $value

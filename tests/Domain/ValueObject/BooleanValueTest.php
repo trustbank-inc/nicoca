@@ -55,4 +55,15 @@ final class BooleanValueTest extends TestCase
         $this->expectException(InvalidValueException::class);
         BooleanValueMock::fromBoolean(null);
     }
+
+    public function testCanCompareValues(): void
+    {
+        $value = BooleanValueMock::fromBoolean(true);
+        $this->assertTrue($value->equals(true));
+
+        $value2 = BooleanValueMock::fromBoolean(false);
+        $value3 = BooleanValueMock::fromBoolean(true);
+        $this->assertFalse($value->equals($value2));
+        $this->assertTrue($value->equals($value3));
+    }
 }

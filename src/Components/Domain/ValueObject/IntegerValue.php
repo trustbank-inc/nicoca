@@ -30,6 +30,19 @@ trait IntegerValue
     }
 
     /**
+     * @param int|IntegerValue $value
+     * @return bool
+     */
+    public function equals(self|int $value): bool
+    {
+        if ($value instanceof self) {
+            return $value->value === $this->value;
+        } else {
+            return $value === $this->value;
+        }
+    }
+
+    /**
      * 最小値を取得する
      *
      * @return int
