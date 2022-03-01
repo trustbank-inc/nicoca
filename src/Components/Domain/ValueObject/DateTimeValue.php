@@ -35,15 +35,17 @@ trait DateTimeValue
 	}
 
     /**
-     * @param DateTimeValue|DateTimeInterface $value
+     * @param DateTimeValue|DateTimeInterface|string $value
      * @return bool
      */
-    public function equals(self|DateTimeInterface $value): bool
+    public function equals(self|DateTimeInterface|string $value): bool
     {
         if ($value instanceof self) {
             return $value->value === $this->value;
+        } elseif ($value instanceof DateTimeInterface) {
+            return $value->format(self::getFormat()) === $this->value->format(self::getFormat());
         } else {
-            return $value === $this->value;
+            return $value === $this->value->format(self::getFormat());
         }
     }
 
