@@ -38,7 +38,7 @@ trait IntegerValue
         if ($value instanceof self) {
             return $value->value === $this->value;
         } else {
-            return $value === $value->value;
+            return $value === $this->value;
         }
     }
 
