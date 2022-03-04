@@ -31,7 +31,7 @@ final class InputValidator
     /**
      * ユースケースの入力値を検証する
      *
-     * @param string[]|string[][]|string[][][] $input 文字列の入力値（GET/POSTを想定）
+     * @param array $input 文字列の入力値（GET/POSTを想定）
      */
     public function validate(array $input): void
     {
@@ -187,9 +187,16 @@ final class InputValidator
                             $this->validated[$fieldName][$index][$childFieldName] = null;
                             continue;
                         }
-                        $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString((string)$childInput[$childFieldName]);
+                        if (is_array($childInput[$childFieldName])) {
+                            $this->validated[$fieldName][$index][$childFieldName] = [];
+                            foreach ($childInput[$childFieldName] as $childValue) {
+                                $this->validated[$fieldName][$index][$childFieldName][] = $childValue;
+                            }
+                        } else {
+                            $this->validated[$fieldName][$index][$childFieldName] = $childClassName::fromString((string)$childInput[$childFieldName]);
+                        }
                     }
-                } 
+                }
             } else {
                 if (is_array($input[$fieldName])) {
                     $this->validated[$fieldName] = [];
