@@ -411,4 +411,35 @@ final class InputValidatorTest extends TestCase
             actual: $validator->getValidated('titles')
         );
     }
+
+    /**
+     * @test
+     */
+    public function testCanValidatedNestedArrayValues(): void
+    {
+        $validator = new InputValidator(
+            requiredFields: [
+                'parent' => [
+                    'child' => ExampleTitle::class,
+                ],
+            ]);
+        $validator->validate([
+            'parent' => [
+                'child' => [
+                    0 => 'test1',
+                    1 => 'test2',
+                    2 => 'test3',
+                ]
+            ],
+        ]);
+        $this->assertEquals([
+            'parent' => [
+                'child' => [
+                    ExampleTitle::fromString('test1'),
+                    ExampleTitle::fromString('test2'),
+                    ExampleTitle::fromString('test3'),
+                ],
+            ],
+        ], $validator->getValidated());
+    }
 }
