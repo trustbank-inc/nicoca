@@ -437,10 +437,12 @@ final class InputValidatorTest extends TestCase
         ]);
         $this->assertEquals([
             'parent' => [
-                'child' => [
-                    ExampleTitle::fromString('test1'),
-                    ExampleTitle::fromString('test2'),
-                    ExampleTitle::fromString('test3'),
+                [
+                    'child' => [
+                        ExampleTitle::fromString('test1'),
+                        ExampleTitle::fromString('test2'),
+                        ExampleTitle::fromString('test3'),
+                    ],
                 ],
             ],
         ], $validator->getValidated());
