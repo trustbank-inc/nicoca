@@ -428,11 +428,13 @@ final class InputValidatorTest extends TestCase
             ]);
         $validator->validate([
             'parent' => [
-                'child' => [
-                    0 => 'test1',
-                    1 => 'test2',
-                    2 => 'test3',
-                ]
+                [
+                    'child' => [
+                        0 => 'test1',
+                        1 => 'test2',
+                        2 => 'test3',
+                    ]
+                ],
             ],
         ]);
         $this->assertEquals([

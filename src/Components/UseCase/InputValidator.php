@@ -31,7 +31,7 @@ final class InputValidator
     /**
      * ユースケースの入力値を検証する
      *
-     * @param string[]|string[][]|string[][][] $input 文字列の入力値（GET/POSTを想定）
+     * @param array $input 文字列の入力値（GET/POSTを想定）
      */
     public function validate(array $input): void
     {
