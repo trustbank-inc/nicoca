@@ -419,6 +419,9 @@ final class InputValidatorTest extends TestCase
     {
         $validator = new InputValidator(
             requiredFields: [
+
+            ],
+            optionalFields: [
                 'parent' => [
                     'child' => ExampleTitle::class,
                 ],
