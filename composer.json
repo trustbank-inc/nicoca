@@ -5,8 +5,8 @@
         "name": "youhei-ushio"
     }],
     "require": {
-        "php": "^8.0",
-        "laravel/framework": "^8.0",
+        "php": ">=8.0",
+        "laravel/framework": ">=8.0",
         "robinvdvleuten/ulid": "^5.0"
     },
     "license": "MIT",
