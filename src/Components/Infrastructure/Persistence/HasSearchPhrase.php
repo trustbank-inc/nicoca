@@ -39,7 +39,15 @@ trait HasSearchPhrase
         }
         $builder->where(function (EloquentBuilder|QueryBuilder $builder) use ($fields, $value, $operator) {
             foreach ($fields as $field) {
-                $builder->orWhere($field, $operator, $value);
+                if (str_contains($field, '.')) {
+                    $relations = substr($field, 0, strrpos($field, '.'));
+                    $field = substr($field, strrpos($field, '.') + 1);
+                    $builder->orWhereHas($relations, function (EloquentBuilder $builder) use ($field, $value, $operator) {
+                        $builder->where($field, $operator, $value);
+                    });
+                } else {
+                    $builder->orWhere($field, $operator, $value);
+                }
             }
         });
     }
