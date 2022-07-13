@@ -81,6 +81,19 @@ final class SearchPhrase
     }
 
     /**
+     * 複数指定の検索フレーズを取得する
+     *
+     * @return self[]
+     */
+    public function split(): array
+    {
+        $words = explode(' ', str_replace('　', ' ', $this->value));
+        return array_map(function ($word) {
+            return self::fromString($word);
+        }, array_filter($words, 'strlen'));
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
