@@ -67,7 +67,7 @@ trait StringValue
      */
     private static function getMaxLength(): int
     {
-        return 1000;
+        return 4194303;
     }
 
     /**
