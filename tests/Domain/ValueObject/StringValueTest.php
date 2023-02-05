@@ -16,6 +16,30 @@ final class StringValueTest extends TestCase
         $this->assertSame('', $value->getValue());
     }
 
+    public function testCanBeCreatedDefaultMaxLengthString(): void
+    {
+        $defaultMaxLength = 4194303;
+        $chars = [...range('0', '9'),... range('a', 'z'),...range('A', 'Z'),...['あ','い','う','え','お','か','き','く','け','こ']];
+        $testString = '';
+        for($i = 0; $i < $defaultMaxLength; $i++){
+            $testString .= $chars[array_rand($chars)];
+        }
+        $value = StringValueMockForNullTest::fromString($testString);
+        $this->assertSame($testString, $value->getValue());
+    }
+
+    public function testCannotBeValidatedDefaultMaxLength(): void
+    {
+        $defaultMaxLength = 4194304;
+        $chars = [...range('0', '9'),... range('a', 'z'),...range('A', 'Z'),...['あ','い','う','え','お','か','き','く','け','こ']];
+        $testString = '';
+        for($i = 0; $i < $defaultMaxLength; $i++){
+            $testString .= $chars[array_rand($chars)];
+        }
+        $this->expectException(InvalidValueException::class);
+        $value = StringValueMockForNullTest::fromString($testString);
+    }
+
     public function testCanBeCreatedMinLengthString(): void
     {
         $value = StringValueMock::fromString('abc');
