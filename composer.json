@@ -5,7 +5,7 @@
         "name": "youhei-ushio"
     }],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "laravel/framework": ">=8.0",
         "robinvdvleuten/ulid": "^5.0"
     },
